@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Plumber Match | Forney Plumbing Pros</title>
+  <meta name="description" content="Answer two quick questions and call or request a free introduction to a licensed local plumber. Forney Plumbing Pros is a free matching service, not a contractor.">
+  <link rel="canonical" href="https://forneyplumbingpros.com/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    window.FPP_FRAMED = (function () { try { return window.self !== window.top; } catch (e) { return true; } })();
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    if (!window.FPP_FRAMED) {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-9LSH07TDFN';
+      document.head.appendChild(s);
+      gtag('js', new Date());
+      gtag('config', 'G-9LSH07TDFN');
+    }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green:#172620; --blue:#1061FE; --orange:#994D0A; --cream:#F7F6F2;
+      --dark:#111827; --mid:#4B5563; --light:#9CA3AF; --border:#E5E7EB; --white:#fff;
+    }
+    body {
+      font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+      background: transparent;
+      color: var(--dark);
+    }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 8px 0 16px; }
+    .title { font-family: 'Lora', Georgia, serif; font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+    .sub { font-size: 13px; color: var(--mid); margin-bottom: 14px; line-height: 1.45; }
+    .card {
+      background: var(--white);
+      border-radius: 4px;
+      padding: 20px 22px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 20px rgba(0,0,0,0.06);
+    }
+    .q-title { font-size: 16px; font-weight: 600; margin-bottom: 10px; }
+    .options { display: flex; flex-direction: column; gap: 6px; }
+    .option {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 4px;
+      background: var(--white); cursor: pointer; text-align: left; width: 100%;
+      font-family: inherit;
+    }
+    .option:hover, .option.selected { border-color: var(--blue); background: #EFF6FF; }
+    .option-label { font-size: 14px; font-weight: 600; color: var(--dark); }
+    .option-sub { font-size: 12px; color: var(--mid); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 8px; padding: 12px 18px; border-radius: 4px; border: none;
+      font-size: 15px; font-weight: 600; cursor: pointer; text-decoration: none;
+      font-family: inherit;
+    }
+    .btn-call { background: var(--orange); color: white; flex: 1; }
+    .btn-call:hover { background: #7A3D07; }
+    .btn-quote { background: var(--white); color: var(--blue); border: 1.5px solid var(--blue); flex: 1; }
+    .btn-more { background: none; color: var(--blue); border: none; padding: 12px 0 0; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; text-decoration: none; display: inline-block; }
+    .actions { display: flex; gap: 8px; margin-top: 14px; }
+    .phone { font-family: 'Lora', Georgia, serif; font-size: 22px; font-weight: 600; color: var(--orange); text-align: center; margin: 8px 0 4px; }
+    .phone a { color: inherit; text-decoration: none; }
+    .note { font-size: 12px; color: var(--mid); line-height: 1.5; margin-top: 12px; }
+    .note a { color: var(--blue); }
+    .back { background: none; border: none; color: var(--light); font-size: 13px; cursor: pointer; margin-top: 10px; font-family: inherit; }
+    .hidden { display: none !important; }
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .form-group input {
+      width: 100%; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 4px;
+      font-size: 16px; font-family: inherit;
+    }
+    .form-check { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; margin: 4px 0 12px; line-height: 1.4; }
+    .form-check input { margin-top: 3px; }
+    .btn-primary { background: var(--blue); color: white; width: 100%; }
+    .btn-primary:hover { background: #0050E0; }
+    @media (max-width: 480px) {
+      .actions { flex-direction: column; }
+      .card { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="title">Find a licensed local plumber</div>
+    <div class="sub">Free matching service, not a contractor. Answer two questions, then call or request a quote. No obligation to hire.</div>
+    <div class="card">
+      <div id="q-screen">
+        <div class="q-title" id="q-title"></div>
+        <div class="options" id="options"></div>
+        <button type="button" class="back hidden" id="back-btn" onclick="goBack()">&larr; Back</button>
+      </div>
+      <div id="results" class="hidden">
+        <div class="q-title">Call or request a free introduction</div>
+        <p class="note" id="result-summary" style="margin-top:0;"></p>
+        <div class="phone"><a href="tel:+14692000065" onclick="trackCall('mini_results','call')">(469) 200-0065</a></div>
+        <div class="actions">
+          <a class="btn btn-call" href="tel:+14692000065" onclick="trackCall('mini_results','call')">Call now</a>
+          <button type="button" class="btn btn-quote" onclick="showForm()">Request a quote</button>
+        </div>
+        <a class="btn-more" id="full-tool-link" href="https://forneyplumbingpros.com/find-a-quality-plumber" target="_top">Want a more detailed match? Use the full form &rarr;</a>
+        <p class="note">We will introduce you to one TSBPE-licensed plumber if we can make a match. We do not list a specific company here.</p>
+      </div>
+      <div id="form-screen" class="hidden">
+        <div class="q-title">Request a free introduction</div>
+        <form id="lead-form">
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+          <input type="hidden" name="_subject" value="New plumbing lead — Forney Plumbing Pros (mini)">
+          <input type="hidden" name="trade" value="plumbing">
+          <input type="hidden" name="source" value="plumber_matching_mini">
+          <input type="hidden" name="Service Needed" id="hidden-service">
+          <input type="hidden" name="Location" id="hidden-location">
+          <input type="hidden" name="also_needs_hvac" id="hidden-also-needs-hvac-value" value="no">
+          <input type="hidden" name="gclid" id="hidden-gclid">
+          <input type="hidden" name="gbraid" id="hidden-gbraid">
+          <input type="hidden" name="wbraid" id="hidden-wbraid">
+          <input type="hidden" name="utm_source" id="hidden-utm_source">
+          <input type="hidden" name="utm_medium" id="hidden-utm_medium">
+          <input type="hidden" name="utm_campaign" id="hidden-utm_campaign">
+          <input type="hidden" name="utm_term" id="hidden-utm_term">
+          <input type="hidden" name="utm_content" id="hidden-utm_content">
+          <input type="hidden" name="landing_page" id="hidden-landing_page">
+          <input type="hidden" name="attr_ts" id="hidden-attr_ts">
+          <div class="form-group"><label for="field-name">Your Name *</label><input id="field-name" name="Name" required autocomplete="name"></div>
+          <div class="form-group"><label for="field-phone">Phone *</label><input id="field-phone" name="Phone" type="tel" required autocomplete="tel"></div>
+          <div class="form-group"><label for="field-email">Email *</label><input id="field-email" name="Email" type="email" required autocomplete="email"></div>
+          <label class="form-check">
+            <input type="checkbox" id="field-also-hvac" value="yes">
+            <span>I also need heating or AC help (<a href="https://forneyhvacpros.com" target="_blank" rel="noopener">Forney HVAC Pros</a>).</span>
+          </label>
+          <button type="submit" class="btn btn-primary" id="submit-btn">Send my request</button>
+        </form>
+        <button type="button" class="back" onclick="showResults()">&larr; Back</button>
+      </div>
+      <div id="success" class="hidden">
+        <div class="q-title">You're all set</div>
+        <p class="note">We have your request. If this is urgent, call or text (469) 200-0065. Email: <a href="mailto:contact@forneyplumbingpros.com">contact@forneyplumbingpros.com</a>.</p>
+        <div class="actions">
+          <a class="btn btn-call" href="tel:+14692000065" onclick="trackCall('mini_success','call')">Call (469) 200-0065</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/PLUMBING_TBD'; // TODO: replace after creating a new Formspree form
+const QUESTIONS = [
+  {
+    id: 'service',
+    title: 'What do you need help with?',
+    options: [
+      { value: 'water_heater', label: 'Water heater' },
+      { value: 'leak_slab', label: 'Leak / slab leak' },
+      { value: 'drain_sewer', label: 'Drain / sewer' },
+      { value: 'gas_line', label: 'Gas line' },
+      { value: 'softener', label: 'Water softener' },
+      { value: 'freeze_burst', label: 'Freeze / burst pipe' },
+      { value: 'other', label: 'Other plumbing work' }
+    ]
+  },
+  {
+    id: 'location',
+    title: 'Where is the property?',
+    options: [
+      { value: 'forney_talty', label: 'Forney / Talty' },
+      { value: 'mesquite_sunnyvale', label: 'Mesquite / Sunnyvale' },
+      { value: 'rockwall_heath', label: 'Rockwall / Heath' },
+      { value: 'terrell_kaufman', label: 'Terrell / Kaufman' },
+      { value: 'crandall_heartland', label: 'Crandall / Heartland' },
+      { value: 'other', label: 'Somewhere else' }
+    ]
+  }
+];
+const CITY_MAP = {
+  forney: 'forney_talty', talty: 'forney_talty',
+  mesquite: 'mesquite_sunnyvale', sunnyvale: 'mesquite_sunnyvale',
+  rockwall: 'rockwall_heath', heath: 'rockwall_heath',
+  terrell: 'terrell_kaufman', kaufman: 'terrell_kaufman',
+  crandall: 'crandall_heartland', heartland: 'crandall_heartland'
+};
+let step = 0;
+let answers = {};
+function $(id){ return document.getElementById(id); }
+function render() {
+  $('q-screen').classList.remove('hidden');
+  $('results').classList.add('hidden');
+  $('form-screen').classList.add('hidden');
+  $('success').classList.add('hidden');
+  const q = QUESTIONS[step];
+  $('q-title').textContent = q.title;
+  const box = $('options');
+  box.innerHTML = '';
+  q.options.forEach(opt => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'option' + (answers[q.id] === opt.value ? ' selected' : '');
+    b.innerHTML = '<span class="option-label"></span>';
+    b.querySelector('.option-label').textContent = opt.label;
+    b.onclick = function () {
+      answers[q.id] = opt.value;
+      track('question_answered', { question: q.id, answer: opt.value, trade: 'plumbing', tool_variant: 'mini' });
+      if (step < QUESTIONS.length - 1) { step++; render(); }
+      else showResults();
+    };
+    box.appendChild(b);
+  });
+  $('back-btn').classList.toggle('hidden', step === 0);
+  sendHeight();
+}
+function goBack(){ if (step > 0) { step--; render(); } }
+function label(id){
+  const q = QUESTIONS.find(x => x.id === id);
+  const o = q && q.options.find(x => x.value === answers[id]);
+  return o ? o.label : (answers[id] || '-');
+}
+function showResults(){
+  $('q-screen').classList.add('hidden');
+  $('form-screen').classList.add('hidden');
+  $('success').classList.add('hidden');
+  $('results').classList.remove('hidden');
+  $('result-summary').textContent = label('service') + ' in ' + label('location') + '. Call or request a quote and we will take the next step.';
+  const params = new URLSearchParams();
+  if (answers.location) params.set('city', answers.location.split('_')[0]);
+  if (answers.service) params.set('service', answers.service);
+  $('full-tool-link').href = 'https://forneyplumbingpros.com/find-a-quality-plumber' + (params.toString() ? '?' + params.toString() : '');
+  track('results_viewed', { trade: 'plumbing', service: answers.service || 'unknown', location: answers.location || 'unknown', tool_variant: 'mini' });
+  sendHeight();
+}
+function showForm(){
+  $('hidden-service').value = label('service');
+  $('hidden-location').value = label('location');
+  fillAttrFields();
+  $('results').classList.add('hidden');
+  $('form-screen').classList.remove('hidden');
+  track('quote_form_opened', { trade: 'plumbing', location: answers.location || 'unknown', tool_variant: 'mini' });
+  sendHeight();
+}
+$('field-also-hvac').addEventListener('change', function(){
+  $('hidden-also-needs-hvac-value').value = this.checked ? 'yes' : 'no';
+});
+$('lead-form').addEventListener('submit', async function(e){
+  e.preventDefault();
+  if (FORMSPREE_ENDPOINT.indexOf('PLUMBING_TBD') !== -1) {
+    alert('The quote form is not connected yet. Please call or text (469) 200-0065, or email contact@forneyplumbingpros.com.');
+    return;
+  }
+  const btn = $('submit-btn');
+  btn.disabled = true; btn.textContent = 'Sending...';
+  fillAttrFields();
+  $('hidden-also-needs-hvac-value').value = $('field-also-hvac').checked ? 'yes' : 'no';
+  try {
+    const fd = new FormData(this);
+    const res = await fetch(FORMSPREE_ENDPOINT, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } });
+    if (!res.ok) throw new Error('failed');
+    const p = { method: 'form', trade: 'plumbing', service: answers.service || 'unknown', location: answers.location || 'unknown', also_needs_hvac: $('field-also-hvac').checked ? 'yes' : 'no', tool_variant: 'mini' };
+    track('lead_submitted', p);
+    sendLead(p, fd);
+    $('form-screen').classList.add('hidden');
+    $('success').classList.remove('hidden');
+    sendHeight();
+  } catch (err) {
+    btn.disabled = false; btn.textContent = 'Send my request';
+    alert('Something went wrong. Please call or text (469) 200-0065, or email contact@forneyplumbingpros.com.');
+  }
+});
+
+const FPP_PARENT_ORIGINS = ['https://forneyplumbingpros.com','https://www.forneyplumbingpros.com'];
+const FPP_TOOL = 'plumber_matching';
+const FPP_ATTR_KEYS = ['gclid','gbraid','wbraid','utm_source','utm_medium','utm_campaign','utm_term','utm_content','landing_page','attr_ts'];
+let attribution = {};
+function cleanAttrVal(v){ v = String(v==null?'':v).trim().replace(/[\0-\x1F\x7F]/g,''); if(!v) return ''; if(v.length>200) v=v.slice(0,200); if(/[<>"'`]/.test(v)) return ''; return v; }
+function applyAttribution(src){ if(!src||typeof src!=='object') return; FPP_ATTR_KEYS.forEach(k => { const v=cleanAttrVal(src[k]); if(v) attribution[k]=v; }); }
+function fillAttrFields(){ FPP_ATTR_KEYS.forEach(k => { const el=$('hidden-'+k); if(el) el.value=attribution[k]||''; }); }
+function readAttrFromSearch(){ const params=new URLSearchParams(window.location.search); const out={}; FPP_ATTR_KEYS.forEach(k=>{ const v=cleanAttrVal(params.get(k)); if(v) out[k]=v; }); return out; }
+window.addEventListener('message', function(e){ if(FPP_PARENT_ORIGINS.indexOf(e.origin)===-1) return; const d=e.data; if(d&&typeof d==='object'&&(d.type==='fpp-attr'||d.type==='fhp-attr')&&d.attr){ applyAttribution(d.attr); fillAttrFields(); } });
+function postToParent(msg){ FPP_PARENT_ORIGINS.forEach(o => { try { window.parent.postMessage(msg, o); } catch(e){} }); }
+function sendHeight(){ window.parent.postMessage({ iframeHeight: document.documentElement.scrollHeight }, '*'); }
+function track(event, params){
+  params = params || {};
+  if (window.FPP_FRAMED) postToParent({ type: 'fpp-event', v: 1, tool: FPP_TOOL, event: event, params: params });
+  else if (typeof gtag !== 'undefined') gtag('event', event, params);
+}
+function trackCall(placement, method){
+  track('call_clicked', { method: method||'call', placement: placement, trade: 'plumbing', service: answers.service||'unknown', location: answers.location||'unknown', tool_variant: 'mini' });
+}
+async function sha256Hex(v){ if(!v||!window.crypto||!crypto.subtle) return ''; const buf=await crypto.subtle.digest('SHA-256', new TextEncoder().encode(v)); return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join(''); }
+function normPhone(p){ let d=String(p||'').replace(/\D/g,''); if(d.length===10) d='1'+d; return (d.length===11&&d[0]==='1')?'+'+d:''; }
+async function sendLead(params, fd){
+  const leadId='pp-mini-'+Date.now()+'-'+Math.random().toString(36).slice(2,8);
+  const userData={};
+  try { const email=String(fd.get('Email')||'').trim().toLowerCase(); const phone=normPhone(fd.get('Phone')); if(email) userData.sha256_email_address=await sha256Hex(email); if(phone) userData.sha256_phone_number=await sha256Hex(phone); } catch(e){}
+  const leadParams=Object.assign({}, params, { source: 'plumber_matching_mini' });
+  if (window.FPP_FRAMED) postToParent({ type:'fpp-event', v:1, tool:FPP_TOOL, event:'generate_lead', lead_id:leadId, params:leadParams, user_data:userData });
+  else if (typeof gtag !== 'undefined') gtag('event','generate_lead', leadParams);
+}
+(function init(){
+  const params=new URLSearchParams(window.location.search);
+  const city=(params.get('city')||'').toLowerCase().replace(/[^a-z]/g,'');
+  if (CITY_MAP[city]) answers.location = CITY_MAP[city];
+  applyAttribution(readAttrFromSearch());
+  fillAttrFields();
+  postToParent({ type:'fpp-attr-request', v:1 });
+  track('tool_started', { trade:'plumbing', city: answers.location||'unknown', tool_variant:'mini' });
+  render();
+  window.addEventListener('load', sendHeight);
+  window.addEventListener('resize', sendHeight);
+})();
+</script>
+</body>
+</html>

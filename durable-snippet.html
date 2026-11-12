@@ -1,0 +1,213 @@
+<!-- Forney Plumbing Pros — Homepage mini matcher (paste into a Durable custom code / embed block).
+     Uses the same Formspree placeholder as the full tool. Replace FORMSPREE_ENDPOINT after
+     the plumbing Formspree form is created. This is inline (not an iframe), so it fires
+     gtag on the host page. -->
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  #fpp-mini * { box-sizing: border-box; margin: 0; padding: 0; }
+  #fpp-mini { font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #111827; max-width: 760px; margin: 0 auto; }
+  #fpp-mini .fpp-title { font-family: Lora, Georgia, serif; font-size: 26px; font-weight: 600; margin-bottom: 6px; }
+  #fpp-mini .fpp-sub { font-size: 14px; color: #4B5563; margin-bottom: 16px; line-height: 1.5; }
+  #fpp-mini .fpp-card { background: #fff; border-radius: 4px; padding: 22px; box-shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 20px rgba(0,0,0,.06); }
+  #fpp-mini .fpp-q { font-size: 16px; font-weight: 600; margin-bottom: 10px; }
+  #fpp-mini .fpp-options { display: flex; flex-direction: column; gap: 6px; }
+  #fpp-mini .fpp-option { display: block; width: 100%; text-align: left; padding: 10px 14px; border: 1.5px solid #E5E7EB; border-radius: 4px; background: #fff; cursor: pointer; font: 600 14px Inter, sans-serif; color: #111827; }
+  #fpp-mini .fpp-option:hover, #fpp-mini .fpp-option.fpp-sel { border-color: #1061FE; background: #EFF6FF; }
+  #fpp-mini .fpp-actions { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  #fpp-mini .fpp-btn { display: inline-flex; align-items: center; justify-content: center; flex: 1; min-width: 140px; padding: 12px 16px; border-radius: 4px; font: 600 15px Inter, sans-serif; text-decoration: none; cursor: pointer; border: none; }
+  #fpp-mini .fpp-call { background: #994D0A; color: #fff; }
+  #fpp-mini .fpp-quote { background: #fff; color: #1061FE; border: 1.5px solid #1061FE; }
+  #fpp-mini .fpp-primary { background: #1061FE; color: #fff; width: 100%; }
+  #fpp-mini .fpp-phone { font-family: Lora, Georgia, serif; font-size: 22px; font-weight: 600; color: #994D0A; text-align: center; margin: 8px 0; }
+  #fpp-mini .fpp-phone a { color: inherit; text-decoration: none; }
+  #fpp-mini .fpp-note { font-size: 12px; color: #4B5563; line-height: 1.5; margin-top: 12px; }
+  #fpp-mini .fpp-note a { color: #1061FE; }
+  #fpp-mini .fpp-back { background: none; border: none; color: #9CA3AF; font: 13px Inter, sans-serif; cursor: pointer; margin-top: 10px; }
+  #fpp-mini .fpp-hide { display: none !important; }
+  #fpp-mini .fpp-group { margin-bottom: 12px; }
+  #fpp-mini .fpp-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  #fpp-mini .fpp-group input { width: 100%; padding: 10px 12px; border: 1.5px solid #E5E7EB; border-radius: 4px; font-size: 16px; }
+  #fpp-mini .fpp-check { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; margin: 4px 0 12px; line-height: 1.4; }
+  @media (max-width: 480px) {
+    #fpp-mini .fpp-title { font-size: 22px; }
+    #fpp-mini .fpp-actions { flex-direction: column; }
+  }
+</style>
+<div id="fpp-mini">
+  <div class="fpp-title">Find a licensed local plumber</div>
+  <div class="fpp-sub">Free matching service, not a contractor. Answer two questions, then call or request a quote. No obligation to hire.</div>
+  <div class="fpp-card">
+    <div id="fpp-q">
+      <div class="fpp-q" id="fpp-q-title"></div>
+      <div class="fpp-options" id="fpp-options"></div>
+      <button type="button" class="fpp-back fpp-hide" id="fpp-back">← Back</button>
+    </div>
+    <div id="fpp-results" class="fpp-hide">
+      <div class="fpp-q">Call or request a free introduction</div>
+      <p class="fpp-note" id="fpp-summary" style="margin-top:0;"></p>
+      <div class="fpp-phone"><a href="tel:+14692000065">(469) 200-0065</a></div>
+      <div class="fpp-actions">
+        <a class="fpp-btn fpp-call" href="tel:+14692000065">Call now</a>
+        <button type="button" class="fpp-btn fpp-quote" id="fpp-open-form">Request a quote</button>
+      </div>
+      <p class="fpp-note">We introduce you to one TSBPE-licensed plumber if we can make a match. We do not list a specific company here. Prefer the longer form? <a href="/find-a-quality-plumber">Open the full matching tool</a>.</p>
+    </div>
+    <div id="fpp-form-wrap" class="fpp-hide">
+      <div class="fpp-q">Request a free introduction</div>
+      <form id="fpp-form">
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+        <input type="hidden" name="_subject" value="New plumbing lead — Forney Plumbing Pros (home mini)">
+        <input type="hidden" name="trade" value="plumbing">
+        <input type="hidden" name="source" value="plumber_matching_home_mini">
+        <input type="hidden" name="Service Needed" id="fpp-hidden-service">
+        <input type="hidden" name="Location" id="fpp-hidden-location">
+        <input type="hidden" name="also_needs_hvac" id="fpp-hidden-hvac" value="no">
+        <input type="hidden" name="gclid" id="fpp-hidden-gclid">
+        <input type="hidden" name="gbraid" id="fpp-hidden-gbraid">
+        <input type="hidden" name="wbraid" id="fpp-hidden-wbraid">
+        <input type="hidden" name="utm_source" id="fpp-hidden-utm_source">
+        <input type="hidden" name="utm_medium" id="fpp-hidden-utm_medium">
+        <input type="hidden" name="utm_campaign" id="fpp-hidden-utm_campaign">
+        <input type="hidden" name="utm_term" id="fpp-hidden-utm_term">
+        <input type="hidden" name="utm_content" id="fpp-hidden-utm_content">
+        <input type="hidden" name="landing_page" id="fpp-hidden-landing_page">
+        <input type="hidden" name="attr_ts" id="fpp-hidden-attr_ts">
+        <div class="fpp-group"><label for="fpp-name">Your Name *</label><input id="fpp-name" name="Name" required autocomplete="name"></div>
+        <div class="fpp-group"><label for="fpp-phone">Phone *</label><input id="fpp-phone" name="Phone" type="tel" required autocomplete="tel"></div>
+        <div class="fpp-group"><label for="fpp-email">Email *</label><input id="fpp-email" name="Email" type="email" required autocomplete="email"></div>
+        <label class="fpp-check"><input type="checkbox" id="fpp-also-hvac" value="yes"><span>I also need heating or AC help (<a href="https://forneyhvacpros.com" target="_blank" rel="noopener">Forney HVAC Pros</a>).</span></label>
+        <button type="submit" class="fpp-btn fpp-primary" id="fpp-submit">Send my request</button>
+      </form>
+      <button type="button" class="fpp-back" id="fpp-form-back">← Back</button>
+    </div>
+    <div id="fpp-success" class="fpp-hide">
+      <div class="fpp-q">You're all set</div>
+      <p class="fpp-note">We have your request. If this is urgent, call or text (469) 200-0065. Email: <a href="mailto:contact@forneyplumbingpros.com">contact@forneyplumbingpros.com</a>.</p>
+      <div class="fpp-actions"><a class="fpp-btn fpp-call" href="tel:+14692000065">Call (469) 200-0065</a></div>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  if (window.fppMiniInit) return;
+  window.fppMiniInit = true;
+  // TODO: Replace after creating a new Formspree plumbing form (do not reuse the HVAC endpoint).
+  var FORMSPREE_ENDPOINT = 'https://formspree.io/f/PLUMBING_TBD';
+  var QUESTIONS = [
+    { id: 'service', title: 'What do you need help with?', options: [
+      { value: 'water_heater', label: 'Water heater' },
+      { value: 'leak_slab', label: 'Leak / slab leak' },
+      { value: 'drain_sewer', label: 'Drain / sewer' },
+      { value: 'gas_line', label: 'Gas line' },
+      { value: 'softener', label: 'Water softener' },
+      { value: 'freeze_burst', label: 'Freeze / burst pipe' },
+      { value: 'other', label: 'Other plumbing work' }
+    ]},
+    { id: 'location', title: 'Where is the property?', options: [
+      { value: 'forney_talty', label: 'Forney / Talty' },
+      { value: 'mesquite_sunnyvale', label: 'Mesquite / Sunnyvale' },
+      { value: 'rockwall_heath', label: 'Rockwall / Heath' },
+      { value: 'terrell_kaufman', label: 'Terrell / Kaufman' },
+      { value: 'crandall_heartland', label: 'Crandall / Heartland' },
+      { value: 'other', label: 'Somewhere else' }
+    ]}
+  ];
+  var step = 0, answers = {};
+  function $(id) { return document.getElementById(id); }
+  function track(event, params) {
+    params = Object.assign({ trade: 'plumbing', tool_variant: 'home_mini' }, params || {});
+    if (typeof gtag === 'function') gtag('event', event, params);
+  }
+  function label(id) {
+    var q, i, j;
+    for (i = 0; i < QUESTIONS.length; i++) if (QUESTIONS[i].id === id) q = QUESTIONS[i];
+    if (!q) return answers[id] || '-';
+    for (j = 0; j < q.options.length; j++) if (q.options[j].value === answers[id]) return q.options[j].label;
+    return answers[id] || '-';
+  }
+  function show(id) {
+    ['fpp-q','fpp-results','fpp-form-wrap','fpp-success'].forEach(function (s) { $(s).classList.add('fpp-hide'); });
+    $(id).classList.remove('fpp-hide');
+  }
+  function render() {
+    show('fpp-q');
+    var q = QUESTIONS[step];
+    $('fpp-q-title').textContent = q.title;
+    var box = $('fpp-options');
+    box.innerHTML = '';
+    q.options.forEach(function (opt) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'fpp-option';
+      b.textContent = opt.label;
+      b.addEventListener('click', function () {
+        answers[q.id] = opt.value;
+        track('question_answered', { question: q.id, answer: opt.value });
+        if (step < QUESTIONS.length - 1) { step++; render(); }
+        else showResults();
+      });
+      box.appendChild(b);
+    });
+    $('fpp-back').classList.toggle('fpp-hide', step === 0);
+  }
+  function showResults() {
+    show('fpp-results');
+    $('fpp-summary').textContent = label('service') + ' in ' + label('location') + '. Call or request a quote and we will take the next step.';
+    track('results_viewed', { service: answers.service || 'unknown', location: answers.location || 'unknown' });
+  }
+  function fillAttr() {
+    var keys = ['gclid','gbraid','wbraid','utm_source','utm_medium','utm_campaign','utm_term','utm_content','landing_page','attr_ts'];
+    var stored = {};
+    try { stored = JSON.parse(localStorage.getItem('fpp_attr') || localStorage.getItem('fhp_attr') || '{}') || {}; } catch (e) { stored = {}; }
+    var qs = new URLSearchParams(location.search);
+    keys.forEach(function (k) {
+      var el = $('fpp-hidden-' + k);
+      if (!el) return;
+      var v = qs.get(k) || stored[k] || '';
+      el.value = String(v).slice(0, 200);
+    });
+  }
+  $('fpp-back').addEventListener('click', function () { if (step > 0) { step--; render(); } });
+  $('fpp-open-form').addEventListener('click', function () {
+    $('fpp-hidden-service').value = label('service');
+    $('fpp-hidden-location').value = label('location');
+    fillAttr();
+    show('fpp-form-wrap');
+    track('quote_form_opened', { location: answers.location || 'unknown' });
+  });
+  $('fpp-form-back').addEventListener('click', showResults);
+  $('fpp-also-hvac').addEventListener('change', function () {
+    $('fpp-hidden-hvac').value = this.checked ? 'yes' : 'no';
+  });
+  document.querySelectorAll('#fpp-mini a[href^="tel:"]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      track('call_clicked', { method: 'call', placement: 'home_mini', service: answers.service || 'unknown', location: answers.location || 'unknown' });
+    });
+  });
+  $('fpp-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (FORMSPREE_ENDPOINT.indexOf('PLUMBING_TBD') !== -1) {
+      alert('The quote form is not connected yet. Please call or text (469) 200-0065, or email contact@forneyplumbingpros.com.');
+      return;
+    }
+    var btn = $('fpp-submit');
+    btn.disabled = true; btn.textContent = 'Sending...';
+    fillAttr();
+    $('fpp-hidden-hvac').value = $('fpp-also-hvac').checked ? 'yes' : 'no';
+    fetch(FORMSPREE_ENDPOINT, { method: 'POST', body: new FormData($('fpp-form')), headers: { 'Accept': 'application/json' } })
+      .then(function (res) {
+        if (!res.ok) throw new Error('failed');
+        var p = { method: 'form', service: answers.service || 'unknown', location: answers.location || 'unknown', also_needs_hvac: $('fpp-also-hvac').checked ? 'yes' : 'no' };
+        track('lead_submitted', p);
+        if (typeof gtag === 'function') gtag('event', 'generate_lead', Object.assign({ source: 'plumber_matching_home_mini', trade: 'plumbing' }, p));
+        show('fpp-success');
+      })
+      .catch(function () {
+        btn.disabled = false; btn.textContent = 'Send my request';
+        alert('Something went wrong. Please call or text (469) 200-0065, or email contact@forneyplumbingpros.com.');
+      });
+  });
+  track('tool_started', { city: 'unknown' });
+  render();
+})();
+</script>
