@@ -12,7 +12,7 @@ Live pages (after GitHub Pages is enabled):
 
 - Quiz: service (water heater, leak/slab leak, drain/sewer, gas line, softener, freeze/burst pipe, other), urgency, and city. Supports `?city=forney` (and other city slugs), plus optional `?service=` and `?urgency=`.
 - Results CTA is the site number, **(469) 200-0065**. Quote form is secondary.
-- Quote form posts to Formspree. **Placeholder endpoint:** `FORMSPREE_ENDPOINT = 'https://formspree.io/f/mrpqpola'` in `index.html`, `mini.html`, and `durable-snippet.html`. Create a new plumbing form (do not reuse the HVAC Formspree ID) and replace that constant.
+- Quote form posts to Formspree. **Endpoint:** `FORMSPREE_ENDPOINT = 'https://formspree.io/f/mrpqpola'` in `index.html`, `mini.html`, and `durable-snippet.html`. (Formspree account contact@forneyplumbingpros.com; do not reuse the HVAC form ID.)
 - Hidden fields capture `gclid`, `gbraid`, `wbraid`, UTMs, `landing_page`, and `attr_ts`. Includes an `also_needs_hvac` checkbox that cross-sells [forneyhvacpros.com](https://forneyhvacpros.com).
 - Contact: (469) 200-0065 · [contact@forneyplumbingpros.com](mailto:contact@forneyplumbingpros.com)
 - GA4 `G-9LSH07TDFN` loads only when the page is opened directly. When iframed, events are posted to `forneyplumbingpros.com` as `{ type: 'fpp-event', ... }`. Height is posted as `{ iframeHeight }`.
