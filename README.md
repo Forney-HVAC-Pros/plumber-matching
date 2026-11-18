@@ -16,6 +16,6 @@ Live pages (after GitHub Pages is enabled):
 - Hidden fields capture `gclid`, `gbraid`, `wbraid`, UTMs, `landing_page`, and `attr_ts`. Includes an `also_needs_hvac` checkbox that cross-sells [forneyhvacpros.com](https://forneyhvacpros.com).
 - Contact: (469) 200-0065 · [contact@forneyplumbingpros.com](mailto:contact@forneyplumbingpros.com)
 - GA4 `G-9LSH07TDFN` loads only when the page is opened directly. When iframed, events are posted to `forneyplumbingpros.com` as `{ type: 'fpp-event', ... }`. Height is posted as `{ iframeHeight }`.
-- Events: `tool_started`, `question_answered`, `results_viewed`, `call_clicked`, `quote_form_opened`, `lead_submitted`, plus `generate_lead` after a successful form post.
+- Events: `tool_started`, `question_answered`, `results_viewed`, `call_clicked`, `quote_form_opened`, `lead_submitted`, plus `generate_lead` after a successful form post. Events are tagged with `site: 'plumbing'` (same GA4 property as HVAC).
 
 See `/workspace/forney-plumbing/EMBEDS.md` for Durable iframe snippets and the global head code.

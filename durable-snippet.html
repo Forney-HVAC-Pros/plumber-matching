@@ -116,7 +116,7 @@
   var step = 0, answers = {};
   function $(id) { return document.getElementById(id); }
   function track(event, params) {
-    params = Object.assign({ trade: 'plumbing', tool_variant: 'home_mini' }, params || {});
+    params = Object.assign({ site: 'plumbing', trade: 'plumbing', tool_variant: 'home_mini' }, params || {});
     if (typeof gtag === 'function') gtag('event', event, params);
   }
   function label(id) {
@@ -200,7 +200,7 @@
         if (!res.ok) throw new Error('failed');
         var p = { method: 'form', service: answers.service || 'unknown', location: answers.location || 'unknown', also_needs_hvac: $('fpp-also-hvac').checked ? 'yes' : 'no' };
         track('lead_submitted', p);
-        if (typeof gtag === 'function') gtag('event', 'generate_lead', Object.assign({ source: 'plumber_matching_home_mini', trade: 'plumbing' }, p));
+        if (typeof gtag === 'function') gtag('event', 'generate_lead', Object.assign({ source: 'plumber_matching_home_mini', trade: 'plumbing', site: 'plumbing' }, p));
         show('fpp-success');
       })
       .catch(function () {
